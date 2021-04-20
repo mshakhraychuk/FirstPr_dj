@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ category.title }} :: {{ block.super  }}
+{%endblock%}
+
+{% block sitebar %}
+{% include 'inc/_sitebar.html' %}
+{%endblock%}
+
+
+{% block content %}
+<div class="col-md-8">
+            {% for i in blog %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Категория: {{i.category}}
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        {% if i.photo %}
+                            <img src="{{ i.photo.url }}" alt="" width="350" class="leftimg p-3">
+                        {% else %}
+                            <img src="https://picsum.photos/id/870/350/300?grayscale&blur=2" alt="" width="350" class="leftimg p-3">
+                        {% endif %}
+                        <div class="media-body">
+                            <h5 class="card-title">{{ i.title }}</h5>
+                            {% autoescape off %}
+                                <p class="card-text">{{ i.content|linebreaks|truncatewords:99 }}</p>
+                            {% endautoescape %}
+                            <a href="#" class="btn btn-primary">Read more...</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ i.created_at|date:"Y-m-d H:i" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+{%endblock%}
